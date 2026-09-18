@@ -15,6 +15,8 @@ class customer:
     def get_shoppingcart(self):
         return self.cart
     
+        
+    
     
 
     
