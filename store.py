@@ -10,7 +10,7 @@ class Store:
         self.products = []
         self.customers = []
         self.orders = []
-        self.queue = OrderQueue()
+        self.order_queue = OrderQueue()
         self.processed = Stack()
         self.order_counter = 0
 
