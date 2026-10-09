@@ -25,7 +25,9 @@ class ShoppingCart:
 
         return self.items
 
-        
+    def clear(self):
+        """Removes all products from the cart"""
+        self.items = []       
     def calculate_total(self):
         """Calculates and returns the total cost of all the products in the shopping items"""
 

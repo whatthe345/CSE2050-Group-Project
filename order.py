@@ -1,5 +1,6 @@
 from customer import Customer
 from product import Product
+from linked_list import LinkedList
 def make_list(n):
     if hasattr(n, '__iter__'):
         return n
@@ -14,7 +15,9 @@ class Order:
         self.stat= status
         self.order_id = order_id
         self.customer = customer
-        self.items = set(items)
+        self.items = LinkedList()
+        for item in items:
+            self.items.add_last(item)
     def get_id(self):
         return self.order_id
     def get_customer(self):
@@ -31,6 +34,6 @@ class Order:
             print("Invalid Status")
     def calculate_total(self):
         total = 0
-        for i in self.items:
-            total= total + i.price
-            
+        for item in self.items:
+            total += item.get_price()
+        return total

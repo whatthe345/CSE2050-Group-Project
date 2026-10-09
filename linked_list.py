@@ -19,7 +19,12 @@ class LinkedList:
             self._tail = new_node
 
         self._size += 1
-
+    def __iter__(self):
+        """Iterate over the items from first to last without modifying the list."""
+        current = self._head
+        while current is not None:
+            yield current.data
+            current = current.next
     def add_last(self, item):
         """Add an item to the end of the list."""
         new_node = Node(item)

@@ -1,12 +1,18 @@
 from product import Product
 from customer import Customer 
-
+from order import Order
+from order_queue import OrderQueue
+from stack import Stack
 class Store: 
     
     def __init__(self):
-        """Initializes a store with empty product and customer records"""
+        """Initializes a store with empty product and customer records and order logs"""
         self.products = []
         self.customers = []
+        self.orders = []
+        self.queue = OrderQueue()
+        self.processed = Stack()
+        self.order_counter = 0
 
     def add_product(self, product: Product):
         """Adds a product to product inventroy if product id doesn't exist"""
@@ -44,4 +50,58 @@ class Store:
                 return cust
 
         return None
+    def find_order(self, order_id: str):
+        """Finds and returns an Order by ID, or None if not found"""
+ 
+        for order in self.orders:
+            if order.get_id() == order_id:
+                return order
+        return None
+    def get_orders(self):
+        return list(self.orders)
+    def checkout(self, customer_id: str):
+        """Creates an Order from the customer's cart, adds it to the
+        store's orders, enqueues it, clears the cart, and returns it.
+        Returns None for an unknown customer or empty cart."""
+ 
+        customer = self.find_customer(customer_id)
+        if customer is None:
+            return None
+ 
+        cart = customer.get_cart()
+        if cart.is_empty():
+            return None
+ 
+        self.order_counter += 1
+        order_id = f"ORD-{self.order_counter}"
+ 
+        # Copy the items so clearing the cart doesn't affect the order
+        order = Order(order_id, customer, list(cart.get_items()))
+ 
+        self.orders.append(order)
+        self.queue.enqueue(order)
+        cart.clear()
+        return order
+    def process_next_order(self):
+        """Dequeues the oldest waiting order. Returns None if no order is waiting."""
+ 
+        order = self.queue.dequeue()
+        if order is None:
+            return None
+ 
+        order.set_status("PROCESSING")
+        self.processed.push(order)
+        return order
+    def get_order_history(self):
+        """Returns a list of all processed orders"""
+ 
+        history = []
+        while not self.processed.is_empty():
+            history.append(self.processed.pop())
+ 
+        # Push back oldest-first so the original stack order is restored
+        for order in reversed(history):
+            self.processed.push(order)
+ 
+        return history
 
