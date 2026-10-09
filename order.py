@@ -14,7 +14,7 @@ class Order:
         self.stat= status
         self.order_id = order_id
         self.customer = customer
-        self.items = items
+        self.items = set(items)
     def get_id(self):
         return self.order_id
     def get_customer(self):
@@ -30,8 +30,7 @@ class Order:
         else:
             print("Invalid Status")
     def calculate_total(self):
-        i=0
         total = 0
-        for i in len(self.items):
-            total = total + self.items[i].get_price()
-            i = i + 1
+        for i in self.items:
+            total= total + i.price
+            
