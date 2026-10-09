@@ -71,3 +71,10 @@ class LinkedList:
     def __len__(self):
         """Return the number of items in the list, so len(my_list) works."""
         return self._size
+    def __eq__(self, other):
+        """Compare item by item with another LinkedList or a list/tuple."""
+        if isinstance(other, LinkedList):
+            return list(self) == list(other)
+        if isinstance(other, (list, tuple)):
+            return list(self) == list(other)
+        return NotImplemented

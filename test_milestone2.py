@@ -1,9 +1,13 @@
 import unittest
-
+import contextlib
+import io
 from linked_list import LinkedList
 from stack import Stack
 from order_queue import OrderQueue
-
+from product import Product
+from customer import Customer
+from order import Order
+from store import Store
 
 class TestLinkedList(unittest.TestCase):
     """Test the public behavior of LinkedList."""
@@ -158,6 +162,82 @@ class TestOrderQueue(unittest.TestCase):
         self.assertEqual(queue.dequeue(), "B")
         self.assertEqual(queue.dequeue(), "C")
 
-
+class TestStoreIntegration(unittest.TestCase):
+    """Test checkout, processing, and history working together in Store."""
+ 
+    def setUp(self):
+        """Create a store with two products and two customers."""
+        self.store = Store()
+        self.mouse = Product("P1", "Mouse", 10)
+        self.keyboard = Product("P2", "Keyboard", 20)
+        self.store.add_product(self.mouse)
+        self.store.add_product(self.keyboard)
+ 
+        self.ann = Customer("C1", "Ann")
+        self.bob = Customer("C2", "Bob")
+        self.store.add_customer(self.ann)
+        self.store.add_customer(self.bob)
+ 
+    def test_checkout(self):
+        """Check that checkout creates an order, queues it, and clears the cart."""
+        cart = self.ann.get_cart()
+        cart.add_product(self.mouse)
+        cart.add_product(self.keyboard)
+ 
+        order = self.store.checkout("C1")
+ 
+        self.assertIsInstance(order, Order)
+        self.assertIs(order.get_customer(), self.ann)
+        self.assertEqual(order.calculate_total(), 30)
+        self.assertEqual(order.get_status(), "PENDING")
+        self.assertTrue(cart.is_empty())
+        self.assertEqual(self.store.get_orders(), [order])
+        self.assertIs(self.store.find_order(order.get_id()), order)
+        self.assertIsNone(self.store.find_order("missing"))
+ 
+        # An empty cart and an unknown customer both return None.
+        self.assertIsNone(self.store.checkout("C1"))
+        self.assertIsNone(self.store.checkout("missing"))
+        self.assertEqual(len(self.store.get_orders()), 1)
+ 
+    def test_processing(self):
+        """Check that orders are processed oldest first."""
+        self.assertIsNone(self.store.process_next_order())
+ 
+        self.ann.get_cart().add_product(self.mouse)
+        first = self.store.checkout("C1")
+        self.bob.get_cart().add_product(self.keyboard)
+        second = self.store.checkout("C2")
+ 
+        self.assertNotEqual(first.get_id(), second.get_id())
+ 
+        self.assertIs(self.store.process_next_order(), first)
+        self.assertEqual(first.get_status(), "PROCESSING")
+        self.assertEqual(second.get_status(), "PENDING")
+ 
+        self.assertIs(self.store.process_next_order(), second)
+        self.assertEqual(second.get_status(), "PROCESSING")
+        self.assertIsNone(self.store.process_next_order())
+ 
+    def test_history(self):
+        """Check that history is newest first and does not change the stack."""
+        self.assertEqual(self.store.get_order_history(), [])
+ 
+        self.ann.get_cart().add_product(self.mouse)
+        first = self.store.checkout("C1")
+        self.bob.get_cart().add_product(self.keyboard)
+        second = self.store.checkout("C2")
+ 
+        # Waiting orders are not part of the history yet.
+        self.assertEqual(self.store.get_order_history(), [])
+ 
+        self.store.process_next_order()
+        self.store.process_next_order()
+ 
+        self.assertEqual(self.store.get_order_history(), [second, first])
+        # Calling it again gives the same result, so nothing was removed.
+        self.assertEqual(self.store.get_order_history(), [second, first])
+        self.assertEqual(self.store.processed.size(), 2)
+ 
 if __name__ == "__main__":
     unittest.main()
