@@ -1,0 +1,20 @@
+LinkedList.add_first: O(1)
+Creates a node and updates the head reference without looping.
+
+LinkedList.add_last: O(1)
+Uses the tail reference to add a node without traversing the list.
+
+LinkedList.remove_first: O(1)
+Removes the first node by updating the head reference.
+
+Stack.push: O(1)
+Calls LinkedList.add_first, which takes constant time.
+
+Stack.pop: O(1)
+Calls LinkedList.remove_first, which takes constant time.
+
+OrderQueue.enqueue: O(1)
+Calls LinkedList.add_last, which takes constant time.
+
+OrderQueue.dequeue: O(1)
+Calls LinkedList.remove_first, which takes constant time.
