@@ -65,3 +65,9 @@ class LinkedList:
     def size(self):
         """Return the number of items in the list."""
         return self._size
+    def __repr__(self):
+        """Return a string showing the items from first to last."""
+        return f"LinkedList({list(self)})"
+    def __len__(self):
+        """Return the number of items in the list, so len(my_list) works."""
+        return self._size

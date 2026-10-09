@@ -73,7 +73,7 @@ class Store:
             return None
  
         self.order_counter += 1
-        order_id = f"ORD-{self.order_counter}"
+        order_id = f"O{self.order_counter}"
  
         # Copy the items so clearing the cart doesn't affect the order
         order = Order(order_id, customer, list(cart.get_items()))
