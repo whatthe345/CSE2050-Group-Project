@@ -41,7 +41,7 @@ class ShoppingCart:
             return False
 
     def __repr__(self):
-        """Returns string summary of th items items"""
+        """Returns string summary of the items items"""
         return f'ShoppingCart({self.items})'
 
 
