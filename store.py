@@ -79,13 +79,13 @@ class Store:
         order = Order(order_id, customer, list(cart.get_items()))
  
         self.orders.append(order)
-        self.queue.enqueue(order)
+        self.order_queue.enqueue(order)
         cart.clear()
         return order
     def process_next_order(self):
         """Dequeues the oldest waiting order. Returns None if no order is waiting."""
  
-        order = self.queue.dequeue()
+        order = self.order_queue.dequeue()
         if order is None:
             return None
  
