@@ -32,6 +32,6 @@ class Order:
     def calculate_total(self):
         i=0
         total = 0
-        for i in make_list(len(self.items)):
+        for i in len(self.items):
             total = total + self.items[i].get_price()
             i = i + 1
