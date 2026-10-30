@@ -3,7 +3,7 @@ from customer import Customer
 from order import Order
 from order_queue import OrderQueue
 from stack import Stack
-from algorithms import bubble_sort, selection_sort, binary_search
+from algorithms import bubble_sort, selection_sort, binary_search, insertion_sort, recursive_total_price,fewest_coins
 class Store: 
     
     def __init__(self):
@@ -113,7 +113,12 @@ class Store:
     def selection_sort_products(self):
         """sort the store's products by ID using selection sort."""
         selection_sort(self.products)
-
+    def insertion_sort_products(self):
+        """sort the store's products by ID using insertion sort."""
+        insertion_sort(self.products)
+    def recursive_catalog_total(self):
+        """Calculate the cost of every product recurively"""
+        return recursive_total_price(self.products)
     def binary_search_product(self, product_id: str):
         """return the matching product or none if not found."""
         index = binary_search(self.products, product_id)
@@ -122,3 +127,5 @@ class Store:
             return None
 
         return self.products[index]
+    def calculate_change (self,coins: list[int], amount: int):
+        return fewest_coins(coins,amount)
