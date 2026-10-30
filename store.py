@@ -3,6 +3,7 @@ from customer import Customer
 from order import Order
 from order_queue import OrderQueue
 from stack import Stack
+from algorithms import bubble_sort, selection_sort, binary_search
 class Store: 
     
     def __init__(self):
@@ -105,3 +106,19 @@ class Store:
  
         return history
 
+    def bubble_sort_products(self):
+        """sort the store products by ID using bubble sort."""
+        bubble_sort(self.products)
+
+    def selection_sort_products(self):
+        """sort the store's products by ID using selection sort."""
+        selection_sort(self.products)
+
+    def binary_search_product(self, product_id: str):
+        """return the matching product or none if not found."""
+        index = binary_search(self.products, product_id)
+
+        if index == -1:
+            return None
+
+        return self.products[index]

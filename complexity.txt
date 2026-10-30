@@ -18,3 +18,12 @@ Calls LinkedList.add_last, which takes constant time.
 
 OrderQueue.dequeue: O(1)
 Calls LinkedList.remove_first, which takes constant time.
+
+
+bubble_sort: O(n^2)
+selection_sort: O(n^2)
+binary_search: O(log n)
+Store.bubble_sort_products: O(n^2)
+Store.selection_sort_products: O(n^2)
+Store.binary_search_product: O(log n)
+
