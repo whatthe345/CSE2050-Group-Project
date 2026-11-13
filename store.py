@@ -3,7 +3,8 @@ from customer import Customer
 from order import Order
 from order_queue import OrderQueue
 from stack import Stack
-from algorithms import bubble_sort, selection_sort, binary_search, insertion_sort, recursive_total_price,fewest_coins
+from algorithms import bubble_sort, selection_sort, binary_search,insertion_sort, recursive_total_price, fewest_coins, merge_sort, quick_sort, quick_select
+
 class Store: 
     
     def __init__(self):
@@ -129,3 +130,16 @@ class Store:
         return self.products[index]
     def calculate_change (self,coins: list[int], amount: int):
         return fewest_coins(coins,amount)
+
+    def merge_sort_products(self):
+        """Sort the store's products by ID using merge sort."""
+        merge_sort(self.products)
+
+    def quick_sort_products(self):
+        """Sort the store's products by ID using quick sort."""
+        quick_sort(self.products)
+
+    def quick_select_product(self, k: int):
+        """Return the kth smallest product by ID, or None for an invalid rank."""
+        return quick_select(self.products, k)
+

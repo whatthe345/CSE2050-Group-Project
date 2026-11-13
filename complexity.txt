@@ -27,3 +27,9 @@ Store.bubble_sort_products: O(n^2)
 Store.selection_sort_products: O(n^2)
 Store.binary_search_product: O(log n)
 
+
+merge_sort (worst case): O(n log n)
+quick_sort (average case): O(n log n)
+quick_sort (worst case): O(n^2)
+quick_select (average case): O(n)
+quick_select (worst case): O(n^2)
