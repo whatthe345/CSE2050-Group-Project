@@ -4,7 +4,7 @@ from order import Order
 from order_queue import OrderQueue
 from stack import Stack
 from algorithms import bubble_sort, selection_sort, binary_search,insertion_sort, recursive_total_price, fewest_coins, merge_sort, quick_sort, quick_select
-from hashMapping import HashMapping
+from hash_mapping import HashMapping
 
 class Store: 
     

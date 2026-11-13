@@ -2,7 +2,7 @@ import unittest
 from store import Store
 from product import Product
 from algorithms import merge_sort, quick_sort, quick_select
-from hashMapping import HashMapping
+from hash_mapping import HashMapping
 
 
 class TestMergeSort(unittest.TestCase):
