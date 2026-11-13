@@ -4,6 +4,7 @@ from order import Order
 from order_queue import OrderQueue
 from stack import Stack
 from algorithms import bubble_sort, selection_sort, binary_search,insertion_sort, recursive_total_price, fewest_coins, merge_sort, quick_sort, quick_select
+from hashMapping import HashMapping
 
 class Store: 
     
@@ -15,9 +16,10 @@ class Store:
         self.order_queue = OrderQueue()
         self.processed = Stack()
         self.order_counter = 0
+        self.hashmapping = HashMapping()
 
     def add_product(self, product: Product):
-        """Adds a product to product inventroy if product id doesn't exist"""
+        """Adds a product to product inventroy if product id doesn't exist and adds it to the hash mapping"""
 
         for prod in self.products:
             if prod.get_id() == product.get_id():
