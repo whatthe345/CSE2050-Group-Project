@@ -26,14 +26,15 @@ class Store:
                 return False 
 
         self.products.append(product)
+        self.hashmapping.put(product.get_id(),product)
         return True
 
     def find_product(self, product_id: str):
-
-        for prod in self.products: 
-            if prod.get_id() == product_id:
-                return prod
-        return None
+        """Returns the product with this ID using the hash mapping, or None if not found"""
+        try:
+            return self.hashmapping.get(product_id)
+        except KeyError:
+            return None
 
 
     def add_customer(self, customer:Customer):
